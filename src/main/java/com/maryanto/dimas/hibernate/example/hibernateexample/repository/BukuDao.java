@@ -28,4 +28,8 @@ public class BukuDao {
     public void delete(Buku buku){
         this.sessionFactory.getCurrentSession().delete(buku);
     }
+
+    public Buku findById(Integer id){
+        return this.sessionFactory.getCurrentSession().get(Buku.class, id);
+    }
 }

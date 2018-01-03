@@ -2,6 +2,7 @@ package com.maryanto.dimas.hibernate.example.hibernateexample;
 
 import com.maryanto.dimas.hibernate.example.hibernateexample.entity.Buku;
 import com.maryanto.dimas.hibernate.example.hibernateexample.repository.BukuDao;
+import junit.framework.TestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import java.time.LocalDate;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class HibernateExampleApplicationTests {
+public class HibernateExampleApplicationTests extends TestCase{
 
 	@Autowired
 	private BukuDao bukuDao;
@@ -30,6 +31,13 @@ public class HibernateExampleApplicationTests {
 		buku.setPengarang("Dimas Maryanto");
 		buku.setTangalPublish(Date.valueOf(LocalDate.of(2017, 4, 10)));
 		bukuDao.save(buku);
+
+		buku.setJudulBuku("Pemograman");
+		bukuDao.update(buku);
+		buku = bukuDao.findById(1);
+		assertEquals(buku.getJudulBuku(), "Pemograman");
+
+		bukuDao.delete(buku);
 	}
 
 }
