@@ -18,8 +18,10 @@ public class BukuDao {
     private SessionFactory sessionFactory;
 
     @Transactional
-    public void save(Buku buku){
-        this.sessionFactory.getCurrentSession().save(buku);
+    public Buku save(Buku buku){
+        Integer id = (Integer) this.sessionFactory.getCurrentSession().save(buku);
+        buku = findById(id);
+        return buku;
     }
 
     @Transactional
