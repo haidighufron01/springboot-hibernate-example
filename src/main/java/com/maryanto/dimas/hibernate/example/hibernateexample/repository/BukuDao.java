@@ -14,8 +14,18 @@ public class BukuDao {
     @Autowired
     private SessionFactory sessionFactory;
 
-    @Transactional(readOnly = false)
+    @Transactional
     public void save(Buku buku){
         this.sessionFactory.getCurrentSession().save(buku);
+    }
+
+    @Transactional
+    public void update(Buku buku){
+        this.sessionFactory.getCurrentSession().update(buku);
+    }
+
+    @Transactional
+    public void delete(Buku buku){
+        this.sessionFactory.getCurrentSession().delete(buku);
     }
 }
