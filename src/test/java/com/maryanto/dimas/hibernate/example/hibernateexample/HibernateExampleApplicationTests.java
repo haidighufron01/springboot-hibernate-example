@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -25,19 +26,33 @@ public class HibernateExampleApplicationTests extends TestCase{
 
 	@Test
 	public void testSimpanData(){
-		Buku buku = new Buku();
-		buku.setId(1);
-		buku.setJudulBuku("Pemograman Java");
-		buku.setPengarang("Dimas Maryanto");
-		buku.setTangalPublish(Date.valueOf(LocalDate.of(2017, 4, 10)));
-		bukuDao.save(buku);
+		Buku pemogramanJava = new Buku();
+		pemogramanJava.setId(1);
+		pemogramanJava.setJudulBuku("Pemograman Java");
+		pemogramanJava.setPengarang("Dimas Maryanto");
+		pemogramanJava.setTangalPublish(Date.valueOf(LocalDate.of(2017, 4, 10)));
+		bukuDao.save(pemogramanJava);
 
-		buku.setJudulBuku("Pemograman");
-		bukuDao.update(buku);
-		buku = bukuDao.findById(1);
-		assertEquals(buku.getJudulBuku(), "Pemograman");
+		Buku pemogramanWeb = new Buku();
+		pemogramanWeb.setId(2);
+		pemogramanWeb.setJudulBuku("Pemograman Web");
+		pemogramanWeb.setPengarang("Dimas");
+		pemogramanWeb.setTangalPublish(Date.valueOf(LocalDate.of(2016, 4, 10)));
+		bukuDao.save(pemogramanWeb);
 
-		bukuDao.delete(buku);
+		pemogramanJava.setJudulBuku("Pemograman");
+		bukuDao.update(pemogramanJava);
+		pemogramanJava = bukuDao.findById(1);
+		assertEquals(pemogramanJava.getJudulBuku(), "Pemograman");
+
+		List<Buku> listBuku = bukuDao.getList();
+		assertEquals(listBuku.size(), 2);
+
+		bukuDao.delete(pemogramanWeb);
+		bukuDao.delete(pemogramanJava);
+
+		listBuku = bukuDao.getList();
+		assertEquals(listBuku.size(), 0);
 	}
 
 }
